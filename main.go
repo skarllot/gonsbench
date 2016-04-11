@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	CONFIG_FILENAME = "config.json"
+	ConfigFilename = "config.json"
 )
 
 type Result struct {
@@ -24,7 +24,7 @@ var config *Config
 func main() {
 	chanBench := make(chan Result, 0)
 	config = &Config{}
-	if err := config.Load(CONFIG_FILENAME); err != nil {
+	if err := config.Load(ConfigFilename); err != nil {
 		fmt.Printf("Error loading configuration file: %v\n", err)
 		return
 	}
@@ -57,7 +57,7 @@ func main() {
 }
 
 func runBench(name, host string, result chan Result) {
-	var latencySum int64 = 0
+	var latencySum int64
 	chanTarget := make(chan int64, 0)
 	targetCount := len(config.Targets)
 
@@ -81,7 +81,7 @@ func runTarget(host, target string, result chan int64) {
 	c := dns.Client{}
 	m := dns.Msg{}
 	rounds := config.Rounds
-	var latencySum int64 = 0
+	var latencySum int64
 
 	target = target + "."
 	host = host + ":53"
