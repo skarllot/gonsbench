@@ -2,9 +2,17 @@
 	"rounds": 15,
 	"targets": [
 		"www.google.com",
+		"www.microsoft.com",
 		"www.uol.com.br",
 		"www.terra.com.br",
-		"www.microsoft.com"
+		"mercadolibre.com.ar",
+		"lanacion.com.ar",
+		"mercadolibre.com.mx",
+		"sat.gob.mx",
+		"amazon.es",
+		"blogspot.com.es",
+		"rakuten.co.jp",
+		"nicovideo.jp"
 	],
 	"providers": [
 		{
@@ -31,6 +39,22 @@
 		{
 			"name": "DNS Advantage",
 			"hosts": ["156.154.70.1","156.154.71.1"]
+		},
+		{
+			"name": "DSN.WATCH",
+			"hosts": ["84.200.69.80","84.200.70.40"]
+		},
+		{
+			"name": "Norton (Sec)",
+			"hosts": ["199.85.126.10", "199.85.127.10"]
+		},
+		{
+			"name": "Norton (Sec+Porn)",
+			"hosts": ["199.85.126.20", "199.85.127.20"]
+		},
+		{
+			"name": "Norton (Sec+Porn+Other)",
+			"hosts": ["199.85.126.30", "199.85.127.30"]
 		}
 	]
 }
