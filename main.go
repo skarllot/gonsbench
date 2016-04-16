@@ -58,6 +58,7 @@ func main() {
 
 func runBench(name, host string, result chan Result) {
 	var latencySum int64
+	var skipped int64
 	chanTarget := make(chan int64, 0)
 	targetCount := len(config.Targets)
 
@@ -69,10 +70,13 @@ func runBench(name, host string, result chan Result) {
 		queryResult := <-chanTarget
 		if queryResult > 0 {
 			latencySum += queryResult
+		} else {
+			skipped++
 		}
 	}
 
-	result <- Result{name, host, time.Duration(latencySum / int64(targetCount))}
+	result <- Result{name, host,
+		time.Duration(latencySum / (int64(targetCount) - skipped))}
 }
 
 func runTarget(host, target string, result chan int64) {
@@ -82,6 +86,7 @@ func runTarget(host, target string, result chan int64) {
 	m := dns.Msg{}
 	rounds := config.Rounds
 	var latencySum int64
+	var skipped int64
 
 	target = target + "."
 	host = host + ":53"
@@ -98,10 +103,11 @@ func runTarget(host, target string, result chan int64) {
 			} else */if strings.Index(err.Error(), TooManyOpenFilesErrorText) > 0 {
 				fmt.Printf("Overflow: %s -> %s\n", host, target)
 			}
+			skipped++
 		} else {
 			latencySum += t.Nanoseconds()
 		}
 	}
 
-	result <- latencySum / int64(rounds)
+	result <- latencySum / (int64(rounds) - skipped)
 }
